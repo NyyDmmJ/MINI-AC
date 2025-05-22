@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>便携小空调</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background: #fafafa;
+    }
+    h1 {
+      margin-top: 40px;
+    }
+    .tip {
+      color: #666;
+      margin-bottom: 30px;
+    }
+    .ac-box {
+      display: inline-block;
+      padding: 20px;
+      border-radius: 15px;
+      background: white;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      position: relative;
+      width: 300px;
+    }
+    .temp-display {
+      font-size: 22px;
+      font-weight: bold;
+      position: absolute;
+      right: 20px;
+      top: 30px;
+    }
+    .icon {
+      position: absolute;
+      top: 30px;
+      right: 60px;
+      font-size: 18px;
+    }
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .round-button {
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      color: white;
+    }
+    .cold { background: #3f51b5; }
+    .power { background: #f44336; }
+    .hot { background: #ffc107; color: black; }
+    .updown-button {
+      background: #ccc;
+      color: black;
+    }
+    .footer {
+      margin-top: 40px;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+  <h1>便携小空调</h1>
+  <p class="tip">
+    💡 Tip: 为你的夏日带来清凉！
+  </p>
+  <div class="ac-box" id="ac-box">
+    <img src="https://img.icons8.com/office/40/air-conditioner.png" alt="ac icon" />
+    <div class="icon" id="mode-icon">❄️</div>
+    <div class="temp-display" id="temperature">--℃</div>
+  </div>
+  <div class="buttons">
+    <button class="round-button cold" onclick="setMode('cool')">❄️</button>
+    <button class="round-button power" onclick="togglePower()">⏻</button>
+    <button class="round-button hot" onclick="setMode('hot')">☀️</button>
+  </div>
+  <div class="buttons" style="margin-top:10px;">
+    <button class="round-button updown-button" onclick="adjustTemp(1)">▲</button>
+    <button class="round-button updown-button" onclick="adjustTemp(-1)">▼</button>
+  </div>
+  <p class="footer">2025 © Air Conditioner</p>
+
+  <script>
+    let powerOn = false;
+    let temperature = 22;
+    let mode = 'cool';
+
+    function updateDisplay() {
+      const tempDisplay = document.getElementById('temperature');
+      const icon = document.getElementById('mode-icon');
+      const box = document.getElementById('ac-box');
+
+      if (powerOn) {
+        tempDisplay.textContent = temperature + '℃';
+        if (mode === 'cool') {
+          icon.textContent = '❄️';
+        } else if (mode === 'hot') {
+          icon.textContent = '☀️';
+        }
+      } else {
+        tempDisplay.textContent = '--℃';
+        icon.textContent = '';
+      }
+    }
+
+    function togglePower() {
+      powerOn = !powerOn;
+      updateDisplay();
+    }
+
+    function setMode(newMode) {
+      if (!powerOn) return;
+      mode = newMode;
+      updateDisplay();
+    }
+
+    function adjustTemp(change) {
+      if (!powerOn) return;
+      temperature += change;
+      if (temperature < 16) temperature = 16;
+      if (temperature > 30) temperature = 30;
+      updateDisplay();
+    }
+  </script>
+</body>
+</html>
